@@ -11,8 +11,19 @@ function show_output() {
 		<script type="text/javascript" language="javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 		<script type="text/javascript" language="javascript">
 	function setStatusAndGo(iid, stat, url) {
-		$.get("/ajax.php", { action: "update_status", status: stat, issue_id: iid }, function() {
+		$.get("ajax.php", { action: "update_status", status: stat, issue_id: iid }, function() {
 			document.location=url;
+		});
+	}
+
+	function setDetailsContent(report_id, field) {
+		$.ajax({
+			type: "GET",
+			url: "field.php",
+			data: "id=" + report_id + "&field=" + field,
+			success: function(data) {
+				$("#details_content_" + report_id).html(data);
+			}
 		});
 	}
 		</script>
