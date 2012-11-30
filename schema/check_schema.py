@@ -13,7 +13,7 @@ def up(conn, options):
 
 def main():
 	(options, args) = get_local_options()
-	conn = run_setup(options, 'database.yml')
+	conn = run_setup(options, 'crashreports/database.yml')
 	try:
 		if options.ver:
 			report(conn)

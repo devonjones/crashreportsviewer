@@ -59,4 +59,4 @@ class CreateCrashes(TableUpdate):
 		self.drop_table()
 
 if __name__ == "__main__":
-	execute(Crashes, '../database.yml')
+	execute(Crashes, 'crashreports/database.yml')
