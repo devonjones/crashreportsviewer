@@ -53,7 +53,7 @@ function bicou_issue_id($stack_trace, $package) {
 function display_versions() {
 	global $_GET;
 
-	$columns = array('id', 'max(added_date) as last_seen',
+	$columns = array('id', 'max(user_crash_date) as last_seen',
 					'count(issue_id) as nb_errors',
 					'app_version_code', 'app_version_name', 'android_version');
 
@@ -123,9 +123,9 @@ function display_versions() {
 }
 
 function get_nb_crashes_per_package($package) {
-	$columns = array("date_format(from_unixtime(added_date), '%Y-%c-%d') as date", 'added_date', 'count(*) as nb_crashes');
+	$columns = array("date_format(user_crash_date, '%Y-%c-%d') as date", 'user_crash_date', 'count(*) as nb_crashes');
 	
-	$sel = "added_date > '?'";
+	$sel = "user_crash_date > '?'";
 	$selA = array(time() - 86400*30);
 	
 	$sel .= " AND package_name = '?'";
@@ -234,7 +234,7 @@ function display_crashes_vs_date() {
 function display_crashes($status) {
 	global $_GET, $package;
 
-	$columns = array('id', /* 'status', */ 'MAX(added_date) as last_seen', 'COUNT(issue_id) as nb_errors', issue_id,
+	$columns = array('id', /* 'status', */ 'MAX(user_crash_date) as last_seen', 'COUNT(issue_id) as nb_errors', issue_id,
 		'MAX(app_version_code) as version_code', 'MAX(app_version_name) as version_name', 'package_name',
 		'phone_model', 'android_version', // 'brand', 'product',
 		'stack_trace');
@@ -330,6 +330,7 @@ function display_crashes($status) {
 				}
 			} else if ($k == "last_seen") {
 				$value = date("d/M/Y G:i:s", $v);
+				$value = $v;
 			} else if ($k == "status") {
 				$value = status_name($tab['status']);
 			} else if ($k == "version_code") {

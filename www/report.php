@@ -35,7 +35,7 @@ function showReport($tab) {
 	echo '<table>';
 	summaryLine("Report #", $tab['id']);
 	$added = '';
-	if (intval($tab['added_date']) > 0) {
+	if (intval($tab['user_crash_date']) > 0) {
 		$added = date('d/M/Y G:i:s', intval($tab['added_date']));
 	} else {
 		$added = "Date unknown";
